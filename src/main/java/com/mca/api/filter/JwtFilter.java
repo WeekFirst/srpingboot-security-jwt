@@ -39,21 +39,25 @@ public class JwtFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        String authToken = httpServletRequest.getHeader("Authorization");
-        final String authTokenStart = "Bearer ";
-        if ((!StringUtils.isEmpty(authToken)) && authToken.startsWith(authTokenStart)) {
-            authToken = authToken.substring(authTokenStart.length());
-        } else {
-            // 不按规范,不允许通过验证
-            authToken = null;
-        }
-        String username = JwtTokenUtil.getUserNameFromToken(authToken);
-        String authority = JwtTokenUtil.getUserRoleFromToken(authToken);
-        List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(authority);
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null, grantedAuthorities);
-            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+        //开放index 和register 鉴权
+        String uri = httpServletRequest.getRequestURI();
+        if (!uri.contains("index") && !uri.contains("register")) {
+            String authToken = httpServletRequest.getHeader("Authorization");
+            final String authTokenStart = "Bearer ";
+            if ((!StringUtils.isEmpty(authToken)) && authToken.startsWith(authTokenStart)) {
+                authToken = authToken.substring(authTokenStart.length());
+            } else {
+                // 不按规范,不允许通过验证
+                authToken = null;
+            }
+            String username = JwtTokenUtil.getUserNameFromToken(authToken);
+            String authority = JwtTokenUtil.getUserRoleFromToken(authToken);
+            List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(authority);
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null, grantedAuthorities);
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }

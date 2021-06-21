@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mca.api.dao.UserRegisterDAO">
+
+    <select id="getTotalSize" resultType="Integer">
+        SELECT
+            count(1)
+        FROM
+            simple_user
+        WHERE
+        <![CDATA[status != -1]]>
+    </select>
+
+    <select id="checkUserAccountIsExit" resultType="Integer" parameterType="string">
+        SELECT
+            count(1)
+        FROM
+            simple_user
+        WHERE
+            user_name = #{userName}
+    </select>
+    
+
+    <insert id="insertUser" parameterType="com.mca.api.entity.UserInfoPo">
+        INSERT
+        INTO
+        simple_user
+        (
+            user_name,
+            user_password,
+            user_nick,
+            create_time,
+            modified_time
+        )
+        VALUES
+        (
+            #{userName},
+            #{userPassword},
+            #{userNick},
+            now(),
+            now()
+        )
+    </insert>
+
+
+</mapper>

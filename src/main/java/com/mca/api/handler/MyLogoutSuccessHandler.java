@@ -21,6 +21,6 @@ public class MyLogoutSuccessHandler implements LogoutSuccessHandler {
 
     @Override
     public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-        ResponseUtil.responseOut(httpServletResponse, Result.ok("推出成功"));
+        ResponseUtil.responseOut(httpServletResponse, Result.ok("退出成功"));
     }
 }

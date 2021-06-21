@@ -24,20 +24,21 @@ public class MyConfig {
 
     /**
      * 注入BCryptPasswordEncoder
+     *
      * @return
      */
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public PersistentTokenRepository persistentTokenRepository(){
+    public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
         //配置数据源
         jdbcTokenRepository.setDataSource(dataSource);
         //自动建表 第一次启动开启 后续关闭
-        jdbcTokenRepository.setCreateTableOnStartup(true);
+//        jdbcTokenRepository.setCreateTableOnStartup(true);
         return jdbcTokenRepository;
     }
 

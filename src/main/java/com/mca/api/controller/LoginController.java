@@ -16,17 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Slf4j
-@RequestMapping(value = "/admin")
+@RequestMapping(value = "/default")
 public class LoginController {
 
     @GetMapping(value = "/info")
-    @PreAuthorize("hasAnyAuthority('admin')")
     public Result info(Authentication authentication) {
         return Result.ok(authentication);
     }
 
     @GetMapping(value = "/infoa")
-    @PreAuthorize("hasAnyAuthority('admina')")
     public Result infoa(Authentication authentication) {
         return Result.ok(authentication);
     }

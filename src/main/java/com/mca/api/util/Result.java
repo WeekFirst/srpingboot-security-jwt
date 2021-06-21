@@ -88,10 +88,6 @@ public class Result implements Serializable {
     public Result() {
     }
 
-    public static Result build(Integer status, String msg) {
-        return new Result(RCode.UNAUTHORIZED.getCode(), msg, null);
-    }
-
     public Result(Long status, String msg, Object data) {
         this.status = status;
         this.msg = msg;
@@ -108,7 +104,7 @@ public class Result implements Serializable {
      * 将json结果集转化为Result对象
      *
      * @param jsonData json数据 传的是Result的对象的Json字符串
-     * @param clazz    TaotaoResult中的object类型
+     * @param clazz    Result中的object类型
      * @return
      */
     public static Result formatToPojo(String jsonData, Class<?> clazz) {
@@ -119,12 +115,10 @@ public class Result implements Serializable {
             JsonNode jsonNode = MAPPER.readTree(jsonData);
             JsonNode data = jsonNode.get("data");
             Object obj = null;
-            if (clazz != null) {
-                if (data.isObject()) {
-                    obj = MAPPER.readValue(data.traverse(), clazz);
-                } else if (data.isTextual()) {
-                    obj = MAPPER.readValue(data.asText(), clazz);
-                }
+            if (data.isObject()) {
+                obj = MAPPER.readValue(data.traverse(), clazz);
+            } else if (data.isTextual()) {
+                obj = MAPPER.readValue(data.asText(), clazz);
             }
             return build((long) jsonNode.get("status").intValue(), jsonNode.get("msg").asText(), obj);
         } catch (Exception e) {
