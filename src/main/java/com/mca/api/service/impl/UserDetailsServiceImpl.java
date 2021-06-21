@@ -31,7 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (ObjectUtils.isEmpty(user)) {
             throw new UsernameNotFoundException("用户名不存在");
         }
-//        return user;
+        //security 会自动进行密码校验
         return new User(user.getUserName(), user.getUserPassword(), AuthorityUtils.commaSeparatedStringToAuthorityList(user.getUserAuthorities()));
     }
 }

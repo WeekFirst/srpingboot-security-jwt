@@ -14,7 +14,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 
 /**
  * @Author an Stark
- * @Description: TODO
+ * @Description: security 核心配置类
  * @Date 2021/6/19 12:23
  * @Version 1.0
  */
@@ -23,9 +23,11 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    //配置存储token的数据库链接设置 在MyConfig中查看
     @Autowired
     private PersistentTokenRepository persistentTokenRepository;
 
+    //自定义UserDetailService 实现 UserDetailService
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
@@ -48,12 +50,10 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //所有的请求都要认证，必须登录才能访问
                 .anyRequest().authenticated()
         ;
-
         //异常处理
         http.exceptionHandling().accessDeniedHandler(new MyAccessDeniedHandler());
         //未登录处理
         http.exceptionHandling().authenticationEntryPoint(new MyAuthenticationEnterPointHandler());
-
         //remember me
         http.rememberMe()
                 //设置数据源
@@ -64,22 +64,16 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .tokenValiditySeconds(60 * 60 * 24 * 7)
                 //自定义登录逻辑
                 .userDetailsService(userDetailsService);
-
-
         //登出
         http.logout()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutSuccessHandler(new MyLogoutSuccessHandler());
-
         //关闭session
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         //修改未jwt 认证 将token解析在交security 接管
         http.addFilter(new JwtFilter(authenticationManager()));
         //关闭csrf防护
         http.csrf().disable();
-
     }
-
-
 }

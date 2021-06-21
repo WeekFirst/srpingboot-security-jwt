@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 
 /**
  * @Author an Stark
- * @Description: TODO
+ * @Description: 其他简单config配置类
  * @Date 2021/6/19 13:01
  * @Version 1.0
  */
@@ -32,12 +32,16 @@ public class MyConfig {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * 用于security的remember me 将token存储数据库操作
+     * @return
+     */
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
         //配置数据源
         jdbcTokenRepository.setDataSource(dataSource);
-        //自动建表 第一次启动开启 后续关闭
+        //自动建表 第一次启动开启 后续手动注释关闭
 //        jdbcTokenRepository.setCreateTableOnStartup(true);
         return jdbcTokenRepository;
     }

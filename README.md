@@ -1,3 +1,7 @@
 # springboot-security
 spring-boot + security + jwt
- 
+1使用创建工具创建包含web模块和security模块的springboot项目
+-如需要数据库进行操作还需引入相应数据库操作模块
+2创建MyWebSecurityConfig类并继承WebSecurityConfigurerAdapter
+3编写并修改WebSecurityConfigurerAdapter的相关设置见MyWebSecurityConfig
+-

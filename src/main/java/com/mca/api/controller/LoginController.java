@@ -25,6 +25,7 @@ public class LoginController {
     }
 
     @GetMapping(value = "/infoa")
+    @PreAuthorize("hasAnyRole('admin' , 'ROLE_admin')")
     public Result infoa(Authentication authentication) {
         return Result.ok(authentication);
     }
