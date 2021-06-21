@@ -1,3 +1,4 @@
+
 package com.mca.api.filter;
 
 import com.mca.api.util.JwtTokenUtil;
@@ -41,7 +42,7 @@ public class JwtFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         //开放index 和register 鉴权
         String uri = httpServletRequest.getRequestURI();
-        if (!uri.contains("index") && !uri.contains("register")) {
+        if (!uri.contains("register") && !uri.contains("index") && !uri.contains("img")) {
             String authToken = httpServletRequest.getHeader("Authorization");
             final String authTokenStart = "Bearer ";
             if ((!StringUtils.isEmpty(authToken)) && authToken.startsWith(authTokenStart)) {

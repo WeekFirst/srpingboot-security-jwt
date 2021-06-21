@@ -16,7 +16,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 @EnableAutoConfiguration
 @ComponentScan(value = {"com.mca.api"})
 @MapperScan("com.mca.api.dao")
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ApiApplication {
 
     public static void main(String[] args) {

@@ -5,6 +5,7 @@ import com.mca.api.handler.*;
 import com.mca.api.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -18,6 +19,8 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
  * @Version 1.0
  */
 @Configuration
+//开启权限注解
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -38,10 +41,14 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
         ;
         //授权
         http.authorizeRequests()
-                //静态资源与其他个别开放目录在JwtFilter中设置
+                //静态资源与其他个别开放目录在JwtFilter中也要设置
+                .antMatchers("/register").permitAll()
+                .antMatchers("/index/**").permitAll()
+                .antMatchers("/img/**").permitAll()
                 //所有的请求都要认证，必须登录才能访问
                 .anyRequest().authenticated()
         ;
+
         //异常处理
         http.exceptionHandling().accessDeniedHandler(new MyAccessDeniedHandler());
         //未登录处理

@@ -1,5 +1,5 @@
 server:
-  port: 8889
+  port: 8888
   servlet:
     context-path: /api
 spring:
@@ -10,11 +10,16 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 
-
+  web:
+    resources:
+      static-locations: classpath:/img/
+  mvc:
+    static-path-pattern: /img/**
 
 mybatis-plus:
   type-aliases-package: com.mca.api.entity
   mapper-locations: classpath:/mapper/*Mapper.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 
