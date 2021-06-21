@@ -41,7 +41,7 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //登录失败自定义处理器
                 .failureHandler(new MyAuthenticationFailureHandler())
         ;
-        //授权
+        //授权路径相关
         http.authorizeRequests()
                 //静态资源与其他个别开放目录在JwtFilter中也要设置
                 .antMatchers("/register").permitAll()

@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * @Author an Stark
  * @ClassName MyAuthenticationEnterPointHandler
- * @Description TODO
+ * @Description 未登录自定义处理器
  * @date 2021/6/21 下午1:00
  * @Version 1.0
  */
