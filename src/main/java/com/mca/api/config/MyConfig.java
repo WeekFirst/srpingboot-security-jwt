@@ -37,7 +37,7 @@ public class MyConfig {
         //配置数据源
         jdbcTokenRepository.setDataSource(dataSource);
         //自动建表 第一次启动开启 后续关闭
-//        jdbcTokenRepository.setCreateTableOnStartup(true);
+        jdbcTokenRepository.setCreateTableOnStartup(true);
         return jdbcTokenRepository;
     }
 
